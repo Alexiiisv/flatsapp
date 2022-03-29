@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:logpage/MyWidgets/menuDrawer.dart';
+import 'package:logpage/messenger.dart';
 
 import 'detail.dart';
 import 'functions/FirestoreHelper.dart';
@@ -54,7 +55,7 @@ class dashBoardState extends State<dashBoard>{
                     trailing: IconButton(onPressed: (){
                       Navigator.push(context, MaterialPageRoute(
                           builder: (context){
-                            return detail(user: user);
+                            return messenger(user: user);
                           }
                       ));
                     },
