@@ -1,3 +1,4 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Utilisateur{
@@ -8,6 +9,7 @@ class Utilisateur{
   String mail="";
   DateTime? birthday;
   String? avatar;
+  List messages = [];
 
 
 
@@ -22,6 +24,7 @@ class Utilisateur{
   mail = map["MAIL"];
   birthday = map["BIRTHDAY"];
   avatar = map["AVATAR"];
+  messages = map["MESSAGES"];
 }
 
 

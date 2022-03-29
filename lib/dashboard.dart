@@ -55,7 +55,7 @@ class dashBoardState extends State<dashBoard>{
                     trailing: IconButton(onPressed: (){
                       Navigator.push(context, MaterialPageRoute(
                           builder: (context){
-                            return messenger(user: user);
+                            return messenger(userReceiver: user);
                           }
                       ));
                     },

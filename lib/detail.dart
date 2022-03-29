@@ -45,6 +45,7 @@ class detailState extends State<detail>{
           ),
         ),
         Text("${widget.user.prenom}  ${widget.user.nom}"),
+        Text("${widget.user.messages}"),
         (widget.user.birthday==null)?Container():Text(widget.user.birthday.toString()),
 
       ],
