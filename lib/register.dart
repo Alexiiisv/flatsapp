@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'functions/FirestoreHelper.dart';
 
@@ -114,7 +115,13 @@ class registerState extends State<register>{
             onPressed: (){
 
               FirestoreHelper().inscription(mail: mail, password: password, prenom: prenom,nom: nom);
+              if (Navigator.canPop(context)) {
+                Navigator.pop(context);
+              } else {
+                SystemNavigator.pop();
+              }
             },
+
             child: Text("Inscription")
         ),
       ],
