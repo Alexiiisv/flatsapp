@@ -51,7 +51,14 @@ class dashBoardState extends State<dashBoard>{
                       ));
                     },
                     title:Text("${user.prenom}"),
-                    trailing: IconButton(onPressed: (){}, icon: Icon(Icons.edit)),
+                    trailing: IconButton(onPressed: (){
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (context){
+                            return detail(user: user);
+                          }
+                      ));
+                    },
+                        icon: Icon(Icons.message_outlined)),
                   );
 
 
