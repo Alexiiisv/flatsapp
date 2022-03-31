@@ -30,7 +30,7 @@ class messengerState extends State<messenger>{
         FirestoreHelper().getUtilisateur(uid).then((Utilisateur user) {
           setState(() {
             myUser = user;
-            uid = FirestoreHelper().getSameUidDiscussion(myUser, user);
+            uid = FirestoreHelper().getSameUidDiscussion(myUser, widget.userReceiver);
             FirestoreHelper().getDiscussion(uid).then((value) {
               setState(() {
                 discussion = value;
