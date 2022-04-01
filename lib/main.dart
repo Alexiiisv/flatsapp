@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:logpage/Library/lib.dart';
 import 'package:logpage/register.dart';
 
 import 'dashboard.dart';
@@ -142,6 +143,9 @@ class _MyHomePageState extends State<MyHomePage> {
               FirestoreHelper()
                   .Connect(mail: mail, password: password)
                   .then((value) {
+                    setState(() {
+                      myProfil = value;
+                    });
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return dashBoard();
                 }));

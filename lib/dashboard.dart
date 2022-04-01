@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:logpage/Library/lib.dart';
 import 'package:logpage/MyWidgets/menuDrawer.dart';
 import 'package:logpage/messenger.dart';
 
@@ -16,6 +17,16 @@ class dashBoard extends StatefulWidget {
 }
 
 class dashBoardState extends State<dashBoard> {
+  late Utilisateur myUser;
+  late String uid;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print(myProfil.id);
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -49,6 +60,9 @@ class dashBoardState extends State<dashBoard> {
                 itemCount: documents.length,
                 itemBuilder: (context, index) {
                   Utilisateur user = Utilisateur(documents[index]);
+                  if (user.id == myProfil.id) {
+                    return Container();
+                  }
                   return ListTile(
                     onTap: () {
                       Navigator.push(context,
@@ -56,14 +70,14 @@ class dashBoardState extends State<dashBoard> {
                         return detail(user: user);
                       }));
                     },
-                    title:Text("${user.prenom}"),
-                    trailing: IconButton(onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(
-                          builder: (context){
+                    title: Text("${user.prenom}"),
+                    trailing: IconButton(
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
                             return messenger(userReceiver: user);
-                          }
-                      ));
-                    },
+                          }));
+                        },
                         icon: Icon(Icons.message_outlined)),
                   );
                 });
