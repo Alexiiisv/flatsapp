@@ -138,9 +138,12 @@ class FirestoreHelper {
       Discussion disc, String message, Utilisateur utilisateur) async {
     if (message != "") {
       message = disc.flatter1 == utilisateur.id ? "0" + message : "1" + message;
+      List<dynamic> mess = [];
+      mess.addAll(disc.message!);
+      mess.add(message);
       fire_discussion.doc(disc.id).set(
         {
-          "MESSAGES": [message]
+          "MESSAGES": mess
         },
         SetOptions(merge: true),
       );
