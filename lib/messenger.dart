@@ -61,165 +61,9 @@ class messengerState extends State<messenger> {
 
   Widget bodyPage() {
     return Stack(children: [
-      /*ListView(
-        children: [
-          Container(
-            margin: EdgeInsets.all(10),
-            padding: EdgeInsets.only(
-                left: 10.0,
-                top: 10,
-                bottom: 10,
-                right: MediaQuery.of(context).size.width / 5),
-            width: MediaQuery.of(context).size.width,
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-              ),
-              child: Text("Bonjour"),
-              padding: EdgeInsets.all(10),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.all(10),
-            padding: EdgeInsets.only(
-                left: MediaQuery.of(context).size.width / 5,
-                top: 10,
-                bottom: 10,
-                right: 10.0),
-            width: MediaQuery.of(context).size.width,
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-              ),
-              child: Text("Bonjour\nComment allez-vous?"),
-              padding: EdgeInsets.all(10),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.all(10),
-            padding: EdgeInsets.only(
-                left: MediaQuery.of(context).size.width / 5,
-                top: 10,
-                bottom: 10,
-                right: 10.0),
-            width: MediaQuery.of(context).size.width,
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-              ),
-              child: Text("Comment vont les enfants?\nToujours en maternelle?"),
-              padding: EdgeInsets.all(10),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.all(10),
-            padding: EdgeInsets.only(
-                left: 10.0,
-                top: 10,
-                bottom: 10,
-                right: MediaQuery.of(context).size.width / 5),
-            width: MediaQuery.of(context).size.width,
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-              ),
-              child: Text(
-                  "Ils sont mort.\nDans un accident de voiture.\nHeureusement ils n'ont pas souffert.\nIls sont mort sur le coup"),
-              padding: EdgeInsets.all(10),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.all(10),
-            padding: EdgeInsets.only(
-                left: MediaQuery.of(context).size.width / 5,
-                top: 10,
-                bottom: 10,
-                right: 10.0),
-            width: MediaQuery.of(context).size.width,
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-              ),
-              child: Text("Ah zut"),
-              padding: const EdgeInsets.all(10),
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.all(10),
-            padding: EdgeInsets.only(
-                left: 10.0,
-                top: 10,
-                bottom: 10,
-                right: MediaQuery.of(context).size.width / 5),
-            height: 150,
-            width: MediaQuery.of(context).size.width,
-            child: Container(
-              height: 20,
-              width: 20,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-              ),
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.all(10),
-            padding: EdgeInsets.only(
-                left: 10.0,
-                top: 10,
-                bottom: 10,
-                right: MediaQuery.of(context).size.width / 5),
-            height: 150,
-            width: MediaQuery.of(context).size.width,
-            child: Container(
-              height: 20,
-              width: 20,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-              ),
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.all(10),
-            padding: EdgeInsets.only(
-                left: MediaQuery.of(context).size.width / 5,
-                top: 10,
-                bottom: 10,
-                right: 10.0),
-            height: 150,
-            width: MediaQuery.of(context).size.width,
-            child: Container(
-              height: 20,
-              width: 20,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-              ),
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.all(10),
-            padding: EdgeInsets.only(
-                left: 10.0,
-                top: 10,
-                bottom: 10,
-                right: MediaQuery.of(context).size.width / 5),
-            height: 150,
-            width: MediaQuery.of(context).size.width,
-            child: Container(
-              height: 20,
-              width: 20,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-              ),
-            ),
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: 100.0,
-          )
-        ],
-      ),*/
-
       ListView.builder(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
         itemCount: discussion!.message?.length,
         itemBuilder: (context, index) {
           String message = discussion!.message?[index];
@@ -302,6 +146,7 @@ class messengerState extends State<messenger> {
                   ),
                   const SizedBox(width: 20), // give it width
                   InkWell(
+
                     onTap: () {
                       print("Message envoyé");
                       FirestoreHelper().sendMessageToDiscussion(
