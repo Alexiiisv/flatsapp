@@ -1,53 +1,31 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:logpage/Library/lib.dart';
-import 'package:logpage/MyWidgets/menuDrawer.dart';
-import 'package:logpage/addContact.dart';
-import 'package:logpage/messenger.dart';
 
 import 'detail.dart';
 import 'functions/FirestoreHelper.dart';
+import 'messenger.dart';
 import 'model/Utilisateur.dart';
 
-class dashBoard extends StatefulWidget {
+class addContact extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return dashBoardState();
+    return addContactState();
   }
 }
 
-class dashBoardState extends State<dashBoard> {
-  late Utilisateur myUser;
-  late String uid;
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    print(myProfil.id);
-  }
-
+class addContactState extends State<addContact> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      drawer: myDrawer(),
       appBar: AppBar(
-        title: const Text("Mes conversations"),
+        title: const Text("Ajouter des contacts"),
         centerTitle: true,
       ),
       body: bodyPage(),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(
-          Icons.group_add,
-        ),
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return addContact();
-          }));
-        },
-      ),
     );
   }
 
@@ -66,7 +44,7 @@ class dashBoardState extends State<dashBoard> {
                   if (user.id == myProfil.id) {
                     return Container();
                   }
-                  if (FirestoreHelper().getSameUidDiscussion(myProfil, user) ==
+                  if (FirestoreHelper().getSameUidDiscussion(myProfil, user) !=
                       "") {
                     return Container();
                   }
@@ -74,18 +52,18 @@ class dashBoardState extends State<dashBoard> {
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return detail(user: user);
-                      }));
+                            return detail(user: user);
+                          }));
                     },
                     title: Text("${user.prenom}"),
                     trailing: IconButton(
                         onPressed: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                            return messenger(userReceiver: user);
-                          }));
+                                return messenger(userReceiver: user);
+                              }));
                         },
-                        icon: Icon(Icons.message_outlined)),
+                        icon: Icon(Icons.person_add_rounded)),
                   );
                 });
           }

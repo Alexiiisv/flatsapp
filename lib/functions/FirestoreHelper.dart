@@ -77,6 +77,14 @@ class FirestoreHelper {
     for (String element in u1.messages) {
       if (u2.messages.contains(element)) return element;
     }
+    return "";
+  }
+
+  //Recupere l'uid de la discussion entre 2 utilisateurs
+  String createSameUidDiscussion(Utilisateur u1, Utilisateur u2) {
+    if (getSameUidDiscussion(u1, u2) != "") {
+      return getSameUidDiscussion(u1, u2);
+    }
     var uid = nanoid(15);
     Map<String, dynamic> map = {
       "FLATTER1": u1.id,
@@ -138,4 +146,5 @@ class FirestoreHelper {
       );
     }
   }
+
 }

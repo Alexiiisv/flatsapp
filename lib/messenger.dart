@@ -33,7 +33,7 @@ class messengerState extends State<messenger> {
           setState(() {
             myUser = user;
             uid = FirestoreHelper()
-                .getSameUidDiscussion(myUser, widget.userReceiver);
+                .createSameUidDiscussion(myUser, widget.userReceiver);
             FirestoreHelper().getDiscussion(uid).then((value) {
               setState(() {
                 discussion = value;
