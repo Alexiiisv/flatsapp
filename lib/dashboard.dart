@@ -48,14 +48,14 @@ class dashBoardState extends State<dashBoard> {
                         return detail(user: user);
                       }));
                     },
-                    title: Text("${user.prenom}"),
-                    trailing: IconButton(
-                        onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return messenger(user: user);
-                          }));
-                        },
+                    title:Text("${user.prenom}"),
+                    trailing: IconButton(onPressed: (){
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (context){
+                            return messenger(userReceiver: user);
+                          }
+                      ));
+                    },
                         icon: Icon(Icons.message_outlined)),
                   );
                 });
