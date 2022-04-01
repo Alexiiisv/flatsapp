@@ -78,7 +78,7 @@ class FirestoreHelper {
     Map<String, dynamic> map = {
       "FLATTER1": u1.id,
       "FLATTER2": u2.id,
-      "MESSAGE": []
+      "MESSAGES": []
     };
     createDiscussion(uid, map);
     updateUserMessages(uid, u1, u2);
@@ -87,23 +87,21 @@ class FirestoreHelper {
   }
 
   updateUserMessages(String uid, Utilisateur u1, Utilisateur u2) {
-    List<dynamic> u1mess = [];
-    u1mess.addAll(u1.messages);
-    u1mess.add(uid);
+    fire_user.doc(u1.id).set(
+        {
+          "MESSAGES": [uid]
+        },
+        SetOptions(
+          merge: true,
+        ));
 
-    List<dynamic> u2mess = [];
-    u2mess.addAll(u2.messages);
-    u2mess.add(uid);
-
-    Map<String, dynamic> u1data = {
-      "MESSAGES": u1mess,
-    };
-
-    Map<String, dynamic> u2data = {
-      "MESSAGES": u2mess,
-    };
-    updateUser(u1.id, u1data);
-    updateUser(u2.id, u2data);
+    fire_user.doc(u2.id).set(
+        {
+          "MESSAGES": [uid]
+        },
+        SetOptions(
+          merge: true,
+        ));
   }
 
   //recupérer les informations d'une discussion
@@ -115,5 +113,15 @@ class FirestoreHelper {
 
   Future createDiscussion(String uid, Map<String, dynamic> map) async {
     fire_discussion.doc(uid).set(map);
+  }
+
+  Future sendMessageToDiscussion(Discussion disc, String message, Utilisateur utilisateur) async {
+    message = disc.flatter1==utilisateur.id?"0"+message:"1"+message;
+    fire_discussion.doc(disc.id).set(
+      {
+        "MESSAGES":[message]
+      },
+      SetOptions(merge: true),
+    );
   }
 }

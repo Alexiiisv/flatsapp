@@ -14,7 +14,7 @@ class Discussion {
     Map<String, dynamic> map = snapshot.data() as Map<String, dynamic>;
     flatter1 = map["FLATTER1"];
     flatter2 = map["FLATTER2"];
-    message = map["MESSAGE"];
+    message = map["MESSAGES"];
 
   }
 }
