@@ -20,6 +20,7 @@ class messengerState extends State<messenger> {
   late Utilisateur myUser;
   late String uid;
   Discussion? discussion;
+  String message = "";
 
   @override
   void initState() {
@@ -232,6 +233,11 @@ class messengerState extends State<messenger> {
                 children: <Widget>[
                   Flexible(
                     child: TextField(
+                      onChanged: (value) {
+                        setState(() {
+                          message = value;
+                        });
+                      },
                       decoration: InputDecoration(
                           hintText: "Entrez votre message...",
                           filled: true,
@@ -245,6 +251,7 @@ class messengerState extends State<messenger> {
                   InkWell(
                     onTap: () {
                       print("Message envoyé");
+                      FirestoreHelper().sendMessageToDiscussion(discussion!, message, myUser);
                     },
                     child: Container(
                       margin: const EdgeInsets.only(right: 10),

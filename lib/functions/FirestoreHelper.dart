@@ -87,9 +87,17 @@ class FirestoreHelper {
   }
 
   updateUserMessages(String uid, Utilisateur u1, Utilisateur u2) {
+    List<dynamic> u1mess = [];
+    u1mess.addAll(u1.messages);
+    u1mess.add(uid);
+
+    List<dynamic> u2mess = [];
+    u2mess.addAll(u2.messages);
+    u2mess.add(uid);
+
     fire_user.doc(u1.id).set(
         {
-          "MESSAGES": [uid]
+          "MESSAGES": u1mess
         },
         SetOptions(
           merge: true,
@@ -97,7 +105,7 @@ class FirestoreHelper {
 
     fire_user.doc(u2.id).set(
         {
-          "MESSAGES": [uid]
+          "MESSAGES": u2mess
         },
         SetOptions(
           merge: true,
@@ -115,13 +123,16 @@ class FirestoreHelper {
     fire_discussion.doc(uid).set(map);
   }
 
-  Future sendMessageToDiscussion(Discussion disc, String message, Utilisateur utilisateur) async {
-    message = disc.flatter1==utilisateur.id?"0"+message:"1"+message;
-    fire_discussion.doc(disc.id).set(
-      {
-        "MESSAGES":[message]
-      },
-      SetOptions(merge: true),
-    );
+  Future sendMessageToDiscussion(
+      Discussion disc, String message, Utilisateur utilisateur) async {
+    if (message != "") {
+      message = disc.flatter1 == utilisateur.id ? "0" + message : "1" + message;
+      fire_discussion.doc(disc.id).set(
+        {
+          "MESSAGES": [message]
+        },
+        SetOptions(merge: true),
+      );
+    }
   }
 }
