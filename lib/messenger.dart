@@ -22,6 +22,7 @@ class messengerState extends State<messenger> {
   late String uid;
   Discussion? discussion;
   String message = "";
+  final fieldText = TextEditingController();
 
   @override
   void initState() {
@@ -136,6 +137,7 @@ class messengerState extends State<messenger> {
                   ),
                   Flexible(
                     child: TextField(
+                      controller: fieldText,
                       onChanged: (value) {
                         setState(() {
                           message = value;
@@ -160,6 +162,7 @@ class messengerState extends State<messenger> {
                           discussion = value;
                         });
                       });
+                      fieldText.clear();
                     },
                     child: Container(
                       margin: const EdgeInsets.only(right: 10),
