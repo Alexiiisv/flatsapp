@@ -26,6 +26,14 @@ class dashBoardState extends State<dashBoard> {
         centerTitle: true,
       ),
       body: bodyPage(),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(
+          Icons.group_add,
+        ),
+        onPressed: () {
+          print("ajouter un contact");
+        },
+      ),
     );
   }
 
