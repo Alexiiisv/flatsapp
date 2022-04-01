@@ -89,7 +89,7 @@ class FirestoreHelper {
     Map<String, dynamic> map = {
       "FLATTER1": u1.id,
       "FLATTER2": u2.id,
-      "MESSAGES": []
+      "MESSAGES": ["Commencez la discussion ici !"]
     };
     createDiscussion(uid, map);
     updateUserMessages(uid, u1, u2);

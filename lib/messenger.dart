@@ -8,7 +8,7 @@ import 'model/Utilisateur.dart';
 class messenger extends StatefulWidget {
   Utilisateur userReceiver;
 
-  messenger({required Utilisateur this.userReceiver});
+  messenger({Key? key, required this.userReceiver}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -61,58 +61,61 @@ class messengerState extends State<messenger> {
 
   Widget bodyPage() {
     return Stack(children: [
-      ListView.builder(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: discussion!.message?.length,
-        itemBuilder: (context, index) {
-          String message = discussion!.message?[index];
-          String indicator = message[0];
-          message = message.substring(1, message.length);
-          print(indicator);
-          if ((int.parse(indicator) == 1 &&
-                  myProfil.id == discussion!.flatter2) ||
-              (int.parse(indicator) == 0 &&
-                  myProfil.id == discussion!.flatter1)) {
-            //message a droite
-            return Container(
-              margin: EdgeInsets.all(10),
-              padding: EdgeInsets.only(
-                  left: MediaQuery.of(context).size.width / 5,
-                  top: 10,
-                  bottom: 10,
-                  right: 10.0),
-              width: MediaQuery.of(context).size.width,
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
+      Container(
+        child: ListView.builder(
+          itemCount: discussion!.message?.length,
+          itemBuilder: (context, index) {
+            String message = discussion!.message?[index];
+            if (message == "Commencez la discussion ici !") return Container();
+            String indicator = message[0];
+            message = message.substring(1, message.length);
+            if ((int.parse(indicator) == 1 &&
+                    myProfil.id == discussion!.flatter2) ||
+                (int.parse(indicator) == 0 &&
+                    myProfil.id == discussion!.flatter1)) {
+              //message a droite
+              return Container(
+                margin: const EdgeInsets.all(10),
+                padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width / 5,
+                    top: 10,
+                    bottom: 10,
+                    right: 10.0),
+                width: MediaQuery.of(context).size.width,
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black),
+                  ),
+                  child: Text(
+                    message,
+                  ),
+                  padding: const EdgeInsets.all(10),
                 ),
-                child: Text(
-                  "${message}",
+              );
+            } else {
+              //message a gauche
+              return Container(
+                margin: const EdgeInsets.all(10),
+                padding: EdgeInsets.only(
+                    left: 10.0,
+                    top: 10,
+                    bottom: 10,
+                    right: MediaQuery.of(context).size.width / 5),
+                width: MediaQuery.of(context).size.width,
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black),
+                  ),
+                  child: Text(message),
+                  padding: const EdgeInsets.all(10),
                 ),
-                padding: EdgeInsets.all(10),
-              ),
-            );
-          } else {
-            //message a gauche
-            return Container(
-              margin: EdgeInsets.all(10),
-              padding: EdgeInsets.only(
-                  left: 10.0,
-                  top: 10,
-                  bottom: 10,
-                  right: MediaQuery.of(context).size.width / 5),
-              width: MediaQuery.of(context).size.width,
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
-                ),
-                child: Text("${message}"),
-                padding: EdgeInsets.all(10),
-              ),
-            );
-          }
-        },
+              );
+            }
+          },
+        ),
+        margin: const EdgeInsets.only(
+          bottom: 80,
+        ),
       ),
       Positioned(
         left: 0,
@@ -128,6 +131,9 @@ class messengerState extends State<messenger> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
+                  const SizedBox(
+                    width: 10,
+                  ),
                   Flexible(
                     child: TextField(
                       onChanged: (value) {
@@ -146,11 +152,14 @@ class messengerState extends State<messenger> {
                   ),
                   const SizedBox(width: 20), // give it width
                   InkWell(
-
                     onTap: () {
-                      print("Message envoyé");
                       FirestoreHelper().sendMessageToDiscussion(
                           discussion!, message, myUser);
+                      FirestoreHelper().getDiscussion(uid).then((value) {
+                        setState(() {
+                          discussion = value;
+                        });
+                      });
                     },
                     child: Container(
                       margin: const EdgeInsets.only(right: 10),
