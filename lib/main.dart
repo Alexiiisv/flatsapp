@@ -136,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       borderRadius: BorderRadius.circular(15))),
               onPressed: () {
                 FirestoreHelper()
-                    .Connect(mail: mail, password: password)
+                    .connect(mail: mail, password: password)
                     .then((value) {
                   setState(() {
                     myProfil = value;

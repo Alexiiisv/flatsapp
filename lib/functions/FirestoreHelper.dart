@@ -1,8 +1,10 @@
+// ignore: file_names
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:logpage/Library/constant.dart';
 import 'package:logpage/model/Discussion.dart';
 import 'package:nanoid/non_secure.dart';
 
@@ -34,8 +36,10 @@ class FirestoreHelper {
     addUser(uid, map);
   }
 
+
   //connection a un compte
-  Future <Utilisateur> Connect({required String mail, required String password}) async {
+  Future<Utilisateur> connect(
+      {required String mail, required String password}) async {
     UserCredential result =
         await auth.signInWithEmailAndPassword(email: mail, password: password);
     User? user = result.user;
@@ -89,7 +93,7 @@ class FirestoreHelper {
     Map<String, dynamic> map = {
       "FLATTER1": u1.id,
       "FLATTER2": u2.id,
-      "MESSAGES": ["Commencez la discussion ici !"]
+      "MESSAGES": ["0${myProfil.prenom} a démarré une conversation!"]
     };
     createDiscussion(uid, map);
     updateUserMessages(uid, u1, u2);
@@ -107,17 +111,13 @@ class FirestoreHelper {
     u2mess.add(uid);
 
     fireUser.doc(u1.id).set(
-        {
-          "MESSAGES": u1mess
-        },
+        {"MESSAGES": u1mess},
         SetOptions(
           merge: true,
         ));
 
     fireUser.doc(u2.id).set(
-        {
-          "MESSAGES": u2mess
-        },
+        {"MESSAGES": u2mess},
         SetOptions(
           merge: true,
         ));
@@ -142,12 +142,9 @@ class FirestoreHelper {
       mess.addAll(disc.message!);
       mess.add(message);
       fireDiscussion.doc(disc.id).set(
-        {
-          "MESSAGES": mess
-        },
+        {"MESSAGES": mess},
         SetOptions(merge: true),
       );
     }
   }
-
 }

@@ -52,8 +52,7 @@ class MessengerState extends State<Messenger> {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title:
-            Text("${widget.userReceiver.prenom} ${widget.userReceiver.nom}"),
+        title: Text("${widget.userReceiver.prenom} ${widget.userReceiver.nom}"),
         centerTitle: true,
       ),
       body: bodyPage(),
@@ -67,51 +66,32 @@ class MessengerState extends State<Messenger> {
           itemCount: discussion!.message?.length,
           itemBuilder: (context, index) {
             String message = discussion!.message?[index];
-            if (message == "Commencez la discussion ici !") return Container();
-            String indicator = message[0];
+            int indicator = int.parse(message[0]);
             message = message.substring(1, message.length);
-            if ((int.parse(indicator) == 1 &&
-                    myProfil.id == discussion!.flatter2) ||
-                (int.parse(indicator) == 0 &&
-                    myProfil.id == discussion!.flatter1)) {
-              //message a droite
-              return Container(
-                margin: const EdgeInsets.all(10),
-                padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width / 5,
-                    top: 10,
-                    bottom: 10,
-                    right: 10.0),
-                width: MediaQuery.of(context).size.width,
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
-                  ),
-                  child: Text(
-                    message,
-                  ),
-                  padding: const EdgeInsets.all(10),
+            bool isSender =
+                (indicator == 1 && myProfil.id == discussion!.flatter2) ||
+                    (indicator == 0 && myProfil.id == discussion!.flatter1);
+
+            return Container(
+              margin: const EdgeInsets.all(10),
+              padding: EdgeInsets.only(
+                left: (isSender) ? MediaQuery.of(context).size.width / 5 : 10,
+                right:
+                    (isSender) ? 10.0 : MediaQuery.of(context).size.width / 5,
+                top: 10,
+                bottom: 10,
+              ),
+              width: MediaQuery.of(context).size.width,
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black),
                 ),
-              );
-            } else {
-              //message a gauche
-              return Container(
-                margin: const EdgeInsets.all(10),
-                padding: EdgeInsets.only(
-                    left: 10.0,
-                    top: 10,
-                    bottom: 10,
-                    right: MediaQuery.of(context).size.width / 5),
-                width: MediaQuery.of(context).size.width,
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
-                  ),
-                  child: Text(message),
-                  padding: const EdgeInsets.all(10),
+                child: Text(
+                  message,
                 ),
-              );
-            }
+                padding: const EdgeInsets.all(10),
+              ),
+            );
           },
         ),
         margin: const EdgeInsets.only(

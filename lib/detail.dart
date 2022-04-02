@@ -72,32 +72,32 @@ class DetailState extends State<Detail> {
         ),
         Text((widget.user.birthday == null)
             ? "Non renseigné"
-            : "${widget.user.birthday}"),
+            : "${widget.user.birthday!.toDate().day.toString()}-${widget.user.birthday!.toDate().month.toString()}-${widget.user.birthday!.toDate().year.toString()}"),
         const SizedBox(
           height: 20,
         ),
         (FirestoreHelper().getSameUidDiscussion(myProfil, widget.user) == "")
             ? Text("Vous n'avez jamais discuter avec ${widget.user.prenom}")
             : Column(
-              children: [
-                Text("Vous avez déjà discuter avec ${widget.user.prenom}"),
-                InkWell(
-                  child: const Text(
-                    "Voir la discussion",
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic),
-                  ),
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return Messenger(userReceiver: widget.user);
-                    }));
-                  },
-                )
-              ],
-            ),
+                children: [
+                  Text("Vous avez déjà discuter avec ${widget.user.prenom}"),
+                  InkWell(
+                    child: const Text(
+                      "Voir la discussion",
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic),
+                    ),
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return Messenger(userReceiver: widget.user);
+                      }));
+                    },
+                  )
+                ],
+              ),
       ],
     );
   }
