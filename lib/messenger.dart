@@ -5,19 +5,19 @@ import 'functions/FirestoreHelper.dart';
 import 'model/Discussion.dart';
 import 'model/Utilisateur.dart';
 
-class messenger extends StatefulWidget {
+class Messenger extends StatefulWidget {
   Utilisateur userReceiver;
 
-  messenger({Key? key, required this.userReceiver}) : super(key: key);
+  Messenger({Key? key, required this.userReceiver}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return messengerState();
+    return MessengerState();
   }
 }
 
-class messengerState extends State<messenger> {
+class MessengerState extends State<Messenger> {
   late Utilisateur myUser;
   late String uid;
   Discussion? discussion;
@@ -53,7 +53,7 @@ class messengerState extends State<messenger> {
     return Scaffold(
       appBar: AppBar(
         title:
-            Text("${widget.userReceiver.prenom}  ${widget.userReceiver.nom}"),
+            Text("${widget.userReceiver.prenom} ${widget.userReceiver.nom}"),
         centerTitle: true,
       ),
       body: bodyPage(),
@@ -137,6 +137,8 @@ class messengerState extends State<messenger> {
                   ),
                   Flexible(
                     child: TextField(
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
                       controller: fieldText,
                       onChanged: (value) {
                         setState(() {

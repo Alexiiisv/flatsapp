@@ -1,52 +1,103 @@
 import 'package:flutter/material.dart';
+import 'package:logpage/Library/constant.dart';
+import 'package:logpage/functions/FirestoreHelper.dart';
 
+import 'messenger.dart';
 import 'model/Utilisateur.dart';
 
-class detail extends StatefulWidget{
+class Detail extends StatefulWidget {
   Utilisateur user;
-  detail({required Utilisateur this.user});
+
+  Detail({Key? key, required this.user}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return detailState();
+    return DetailState();
   }
-
 }
 
-class detailState extends State<detail>{
+class DetailState extends State<Detail> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(
-        title: Text("${widget.user.prenom}  ${widget.user.nom}"),
-        centerTitle: true,
-      ),
-      body: Container(
-        child: Center(
-            child: bodyPage(),
-        )
-      )
-    );
+        appBar: AppBar(
+          title: Text("${widget.user.prenom} ${widget.user.nom}"),
+          centerTitle: true,
+        ),
+        body: Center(
+          child: bodyPage(),
+        ));
   }
-  Widget bodyPage(){
-    return Column(
 
+  Widget bodyPage() {
+    return Column(
       children: [
+        const SizedBox(
+          height: 50,
+        ),
         Container(
           height: 150,
           width: 150,
           decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            image: DecorationImage(
-              fit: BoxFit.fill,
-              image: (widget.user.avatar==null)?NetworkImage("https://voitures.com/wp-content/uploads/2017/06/Kodiaq_079.jpg.jpg"):NetworkImage(widget.user.avatar!),
-            )
-          ),
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                fit: BoxFit.fill,
+                image: (widget.user.avatar == null)
+                    ? const NetworkImage(
+                        "https://voitures.com/wp-content/uploads/2017/06/Kodiaq_079.jpg.jpg")
+                    : NetworkImage(widget.user.avatar!),
+              )),
         ),
-        Text("${widget.user.prenom}  ${widget.user.nom}"),
-        (widget.user.birthday==null)?Container():Text(widget.user.birthday.toString()),
-
+        const SizedBox(
+          height: 30,
+        ),
+        Text(
+          "${widget.user.prenom} ${widget.user.nom}",
+          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        const Text(
+          "Addresse mail:",
+        ),
+        Text(widget.user.mail),
+        const SizedBox(
+          height: 20,
+        ),
+        const Text(
+          "Date de naissance:",
+        ),
+        Text((widget.user.birthday == null)
+            ? "Non renseigné"
+            : "${widget.user.birthday}"),
+        const SizedBox(
+          height: 20,
+        ),
+        (FirestoreHelper().getSameUidDiscussion(myProfil, widget.user) == "")
+            ? Text("Vous n'avez jamais discuter avec ${widget.user.prenom}")
+            : Column(
+              children: [
+                Text("Vous avez déjà discuter avec ${widget.user.prenom}"),
+                InkWell(
+                  child: const Text(
+                    "Voir la discussion",
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.italic),
+                  ),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return Messenger(userReceiver: widget.user);
+                    }));
+                  },
+                )
+              ],
+            ),
       ],
     );
   }

@@ -8,44 +8,46 @@ import 'package:logpage/functions/FirestoreHelper.dart';
 import 'package:logpage/model/Utilisateur.dart';
 
 
-class myDrawer extends StatefulWidget{
+class MyDrawer extends StatefulWidget{
+  const MyDrawer({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return myDrawerState();
+    return MyDrawerState();
   }
 
 }
 
-class myDrawerState extends State<myDrawer>{
+class MyDrawerState extends State<MyDrawer>{
   late Utilisateur monProfil;
   late String uid;
   late Uint8List? bytesData;
   late String fileName;
   late String urlImage;
 
-  PopImage() {
+  popImage() {
     showDialog(
         context: context,
         barrierDismissible: false,
         builder: (context) {
           if (Platform.isIOS) {
             return CupertinoAlertDialog(
-              title: Text("Souhaitez vous utiliser cette image comme pp de profile ?"),
+              title: const Text("Souhaitez vous utiliser cette image comme pp de profile ?"),
               content: Image.memory(bytesData!),
             );
           }
           else
           {
             return AlertDialog(
-              title: Text("Souhaitez vous utiliser cette image comme pp de profile ?"),
+              title: const Text("Souhaitez vous utiliser cette image comme pp de profile ?"),
               content: Image.memory(bytesData!),
               actions: [
                 ElevatedButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text("Annuler"),
+                  child: const Text("Annuler"),
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -60,7 +62,7 @@ class myDrawerState extends State<myDrawer>{
                     FirestoreHelper().updateUser(monProfil.id, map);
                     Navigator.pop(context);
                   },
-                  child: Text("Confirmer"),
+                  child: const Text("Confirmer"),
                 ),
               ],
             );
@@ -79,7 +81,7 @@ class myDrawerState extends State<myDrawer>{
         fileName = result.files.first.name;
       });
     }
-    PopImage();
+    popImage();
 
   }
 
@@ -102,14 +104,14 @@ class myDrawerState extends State<myDrawer>{
 
   Widget bodyPage(){
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width/2,
       color: Colors.white,
       child: Center(
         child: Column(
           children: [
-            SizedBox(height: 60,),
+            const SizedBox(height: 60,),
             InkWell(
               child: Container(
                 height: 100,
@@ -118,7 +120,7 @@ class myDrawerState extends State<myDrawer>{
                     shape: BoxShape.circle,
                     image: DecorationImage(
                       fit: BoxFit.fill,
-                      image: (monProfil.avatar==null)?NetworkImage("https://voitures.com/wp-content/uploads/2017/06/Kodiaq_079.jpg.jpg"):NetworkImage(monProfil.avatar!),
+                      image: (monProfil.avatar==null)?const NetworkImage("https://voitures.com/wp-content/uploads/2017/06/Kodiaq_079.jpg.jpg"):NetworkImage(monProfil.avatar!),
                     )
                 ),
               ),
@@ -126,12 +128,12 @@ class myDrawerState extends State<myDrawer>{
                 importerImage();
               },
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Text("${monProfil.prenom}  ${monProfil.nom}"),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             (monProfil.birthday==null)?Container():Text(monProfil.birthday.toString()),
-            SizedBox(height: 20,),
-            Text("${monProfil.mail}"),
+            const SizedBox(height: 20,),
+            Text(monProfil.mail),
           ],
         ),
       ),

@@ -7,16 +7,18 @@ import 'functions/FirestoreHelper.dart';
 import 'messenger.dart';
 import 'model/Utilisateur.dart';
 
-class addContact extends StatefulWidget {
+class AddContact extends StatefulWidget {
+  const AddContact({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return addContactState();
+    return AddContactState();
   }
 }
 
 
-class addContactState extends State<addContact> {
+class AddContactState extends State<AddContact> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -31,10 +33,10 @@ class addContactState extends State<addContact> {
 
   Widget bodyPage() {
     return StreamBuilder<QuerySnapshot>(
-        stream: FirestoreHelper().fire_user.snapshots(),
+        stream: FirestoreHelper().fireUser.snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else {
             List documents = snapshot.data!.docs;
             return ListView.builder(
@@ -52,18 +54,18 @@ class addContactState extends State<addContact> {
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                            return detail(user: user);
+                            return Detail(user: user);
                           }));
                     },
-                    title: Text("${user.prenom}"),
+                    title: Text(user.prenom),
                     trailing: IconButton(
                         onPressed: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                                return messenger(userReceiver: user);
+                                return Messenger(userReceiver: user);
                               }));
                         },
-                        icon: Icon(Icons.person_add_rounded)),
+                        icon: const Icon(Icons.person_add_rounded)),
                   );
                 });
           }

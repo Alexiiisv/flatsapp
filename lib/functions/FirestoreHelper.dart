@@ -11,9 +11,9 @@ import '../model/Utilisateur.dart';
 class FirestoreHelper {
   //Attributs
   final auth = FirebaseAuth.instance;
-  final fire_user = FirebaseFirestore.instance.collection("Utilisateurs");
-  final fire_discussion = FirebaseFirestore.instance.collection("Discussion");
-  final fire_storage = FirebaseStorage.instance;
+  final fireUser = FirebaseFirestore.instance.collection("Utilisateurs");
+  final fireDiscussion = FirebaseFirestore.instance.collection("Discussion");
+  final fireStorage = FirebaseStorage.instance;
 
   //Inscription dans l'authentification
   Future inscription(
@@ -45,7 +45,7 @@ class FirestoreHelper {
 
   //ajouter un utilisateur a la base de donnée
   addUser(String uid, Map<String, dynamic> map) {
-    fire_user.doc(uid).set(map);
+    fireUser.doc(uid).set(map);
   }
 
   //Récupèrer l'uuid de la partie authentification
@@ -56,18 +56,18 @@ class FirestoreHelper {
 
   //mettre a jour un utilisateur
   updateUser(String uid, Map<String, dynamic> map) {
-    fire_user.doc(uid).update(map);
+    fireUser.doc(uid).update(map);
   }
 
   //Construire un utilisateur de type utilisateur
   Future<Utilisateur> getUtilisateur(String uid) async {
-    DocumentSnapshot snapshot = await fire_user.doc(uid).get();
+    DocumentSnapshot snapshot = await fireUser.doc(uid).get();
     return Utilisateur(snapshot);
   }
 
   //sauvegarder une image dans firebase
   Future<String> savePic(String name, Uint8List data) async {
-    TaskSnapshot download = await fire_storage.ref("image/$name").putData(data);
+    TaskSnapshot download = await fireStorage.ref("image/$name").putData(data);
     String urlDownload = await download.ref.getDownloadURL();
     return urlDownload;
   }
@@ -106,7 +106,7 @@ class FirestoreHelper {
     u2mess.addAll(u2.messages);
     u2mess.add(uid);
 
-    fire_user.doc(u1.id).set(
+    fireUser.doc(u1.id).set(
         {
           "MESSAGES": u1mess
         },
@@ -114,7 +114,7 @@ class FirestoreHelper {
           merge: true,
         ));
 
-    fire_user.doc(u2.id).set(
+    fireUser.doc(u2.id).set(
         {
           "MESSAGES": u2mess
         },
@@ -125,13 +125,13 @@ class FirestoreHelper {
 
   //recupérer les informations d'une discussion
   Future<Discussion> getDiscussion(String uid) async {
-    DocumentSnapshot snapshot = await fire_discussion.doc(uid).get();
+    DocumentSnapshot snapshot = await fireDiscussion.doc(uid).get();
 
     return Discussion(snapshot);
   }
 
   Future createDiscussion(String uid, Map<String, dynamic> map) async {
-    fire_discussion.doc(uid).set(map);
+    fireDiscussion.doc(uid).set(map);
   }
 
   Future sendMessageToDiscussion(
@@ -141,7 +141,7 @@ class FirestoreHelper {
       List<dynamic> mess = [];
       mess.addAll(disc.message!);
       mess.add(message);
-      fire_discussion.doc(disc.id).set(
+      fireDiscussion.doc(disc.id).set(
         {
           "MESSAGES": mess
         },

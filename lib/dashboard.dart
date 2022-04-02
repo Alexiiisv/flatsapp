@@ -9,15 +9,17 @@ import 'detail.dart';
 import 'functions/FirestoreHelper.dart';
 import 'model/Utilisateur.dart';
 
-class dashBoard extends StatefulWidget {
+class DashBoard extends StatefulWidget {
+  const DashBoard({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return dashBoardState();
+    return DashBoardState();
   }
 }
 
-class dashBoardState extends State<dashBoard> {
+class DashBoardState extends State<DashBoard> {
   late Utilisateur myUser;
   late String uid;
 
@@ -25,14 +27,13 @@ class dashBoardState extends State<dashBoard> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print(myProfil.id);
   }
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      drawer: myDrawer(),
+      drawer: const MyDrawer(),
       appBar: AppBar(
         title: const Text("Mes conversations"),
         centerTitle: true,
@@ -44,7 +45,7 @@ class dashBoardState extends State<dashBoard> {
         ),
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return addContact();
+            return const AddContact();
           }));
         },
       ),
@@ -53,10 +54,10 @@ class dashBoardState extends State<dashBoard> {
 
   Widget bodyPage() {
     return StreamBuilder<QuerySnapshot>(
-        stream: FirestoreHelper().fire_user.snapshots(),
+        stream: FirestoreHelper().fireUser.snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else {
             List documents = snapshot.data!.docs;
             return ListView.builder(
@@ -74,18 +75,18 @@ class dashBoardState extends State<dashBoard> {
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return detail(user: user);
+                        return Detail(user: user);
                       }));
                     },
-                    title: Text("${user.prenom}"),
+                    title: Text(user.prenom),
                     trailing: IconButton(
                         onPressed: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                            return messenger(userReceiver: user);
+                            return Messenger(userReceiver: user);
                           }));
                         },
-                        icon: Icon(Icons.message_outlined)),
+                        icon: const Icon(Icons.message_outlined)),
                   );
                 });
           }
