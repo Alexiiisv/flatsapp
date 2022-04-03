@@ -39,6 +39,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String mail = "";
   String password = "";
+  final fieldTextemail = TextEditingController();
+  final fieldTextpassword = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
             height: 20,
           ),
           TextField(
+            controller: fieldTextemail,
             onChanged: (value) {
               setState(() {
                 mail = value;
@@ -112,6 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
             height: 20,
           ),
           TextField(
+            controller: fieldTextpassword,
             onChanged: (value) {
               setState(() {
                 password = value;
@@ -141,6 +145,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   setState(() {
                     myProfil = value;
                   });
+                  fieldTextemail.clear();
+                  fieldTextpassword.clear();
+                  mail = "";
+                  password = "";
                   Navigator.push(context, MaterialPageRoute(
                       settings: RouteSettings(name: "/connection"),
                       builder: (context) {
