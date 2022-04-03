@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:logpage/Library/constant.dart';
 import 'package:logpage/model/Discussion.dart';
 import 'package:nanoid/non_secure.dart';
@@ -35,7 +36,6 @@ class FirestoreHelper {
     };
     addUser(uid, map);
   }
-
 
   //connection a un compte
   Future<Utilisateur> connect(
@@ -146,5 +146,35 @@ class FirestoreHelper {
         SetOptions(merge: true),
       );
     }
+  }
+
+  Future deleteUser(String uid) async {
+    List alldatas = [];
+    List alldata = [];
+
+    for (var element in myProfil.messages) {
+      await fireDiscussion.doc(element).get().then((value) => {
+            alldata.add(element),
+            alldata.add(value.data()!["FLATTER1"]),
+            alldata.add(value.data()!["FLATTER2"]),
+            alldatas.add(alldata)
+          });
+      for (var data in alldatas) {
+        for (var info in data) {
+          if (info != uid && info != data[0]) {
+            Utilisateur utilisateur = await getUtilisateur(info);
+            List datamodified = utilisateur.messages;
+            datamodified.remove(data[0]);
+            Map<String, dynamic> map = {
+              "MESSAGES": datamodified,
+            };
+            updateUser(utilisateur.id, map);
+          }
+        }
+      }
+      fireDiscussion.doc(element).delete();
+    }
+    fireUser.doc(uid).delete();
+    auth.currentUser!.delete();
   }
 }

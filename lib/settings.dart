@@ -105,10 +105,12 @@ class SettingsState extends State<Settings> {
           height: 30,
         ),
         SizedBox(
-          width: MediaQuery.of(context).size.width*0.66,
+          width: MediaQuery.of(context).size.width * 0.66,
           child: DateTimePicker(
             type: DateTimePickerType.date,
-            initialValue: (myProfil.birthday==null)?DateTime.now().toString():myProfil.birthday.toString(),
+            initialValue: (myProfil.birthday == null)
+                ? DateTime.now().toString()
+                : myProfil.birthday.toString(),
             firstDate: DateTime(1950),
             lastDate: DateTime(DateTime.now().year + 1),
             icon: const Icon(Icons.event),
@@ -124,6 +126,16 @@ class SettingsState extends State<Settings> {
             }),
           ),
         ),
+        const SizedBox(
+          height: 20,
+        ),
+        ElevatedButton(
+          onPressed: () {
+            FirestoreHelper().deleteUser(myProfil.id);
+            Navigator.pop(context);
+          },
+          child: Text("Supprimer le compte"),
+        ),
       ],
     );
   }
@@ -133,9 +145,13 @@ class SettingsState extends State<Settings> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text((valueToChange == "firstName")?"Modifiez votre prénom":"Modifiez votre nom"),
+            title: Text((valueToChange == "firstName")
+                ? "Modifiez votre prénom"
+                : "Modifiez votre nom"),
             content: TextFormField(
-              initialValue: (valueToChange == "firstName")?myProfil.prenom:myProfil.nom,
+              initialValue: (valueToChange == "firstName")
+                  ? myProfil.prenom
+                  : myProfil.nom,
               onChanged: (value) {
                 setState(() {
                   if (valueToChange == "firstName") firstName = value;
@@ -160,8 +176,14 @@ class SettingsState extends State<Settings> {
                 onPressed: () {
                   setState(() {
                     Map<String, dynamic> map = {};
-                    if (valueToChange == "firstName") map = {"PRENOM": firstName,};
-                    if (valueToChange == "lastName") map = {"NOM": lastName,};
+                    if (valueToChange == "firstName")
+                      map = {
+                        "PRENOM": firstName,
+                      };
+                    if (valueToChange == "lastName")
+                      map = {
+                        "NOM": lastName,
+                      };
 
                     FirestoreHelper().updateUser(myProfil.id, map);
                     Navigator.pop(context);
@@ -241,5 +263,4 @@ class SettingsState extends State<Settings> {
     }
     popImage();
   }
-
 }
