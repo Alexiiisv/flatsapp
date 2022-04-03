@@ -18,7 +18,6 @@ class AddContact extends StatefulWidget {
   }
 }
 
-
 class AddContactState extends State<AddContact> {
   @override
   Widget build(BuildContext context) {
@@ -55,16 +54,24 @@ class AddContactState extends State<AddContact> {
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                            return Detail(user: user);
-                          }));
+                        return Detail(user: user);
+                      }));
                     },
                     title: Text(user.prenom),
                     trailing: IconButton(
                         onPressed: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                                return Messenger(userReceiver: user);
-                              }));
+                            return Messenger(userReceiver: user);
+                          })).then((_) => {
+                                setState(() {
+                                  FirestoreHelper()
+                                      .getUtilisateur(myProfil.id)
+                                      .then((Utilisateur user) {
+                                    myProfil = user;
+                                  });
+                                })
+                              });
                         },
                         icon: const Icon(Icons.person_add_rounded)),
                   );

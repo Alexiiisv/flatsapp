@@ -39,6 +39,11 @@ class MessengerState extends State<Messenger> {
             FirestoreHelper().getDiscussion(uid).then((value) {
               setState(() {
                 discussion = value;
+                FirestoreHelper()
+                    .getUtilisateur(myProfil.id)
+                    .then((Utilisateur user) {
+                  myProfil = user;
+                });
               });
             });
           });
@@ -77,7 +82,7 @@ class MessengerState extends State<Messenger> {
               padding: EdgeInsets.only(
                 left: (isSender) ? MediaQuery.of(context).size.width / 5 : 10,
                 right:
-                (isSender) ? 10.0 : MediaQuery.of(context).size.width / 5,
+                    (isSender) ? 10.0 : MediaQuery.of(context).size.width / 5,
                 top: 10,
                 bottom: 10,
               ),

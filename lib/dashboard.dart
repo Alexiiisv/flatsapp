@@ -46,7 +46,15 @@ class DashBoardState extends State<DashBoard> {
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return const AddContact();
-          }));
+          })).then((_) {
+            setState(() {
+              FirestoreHelper()
+                  .getUtilisateur(myProfil.id)
+                  .then((Utilisateur user) {
+                myProfil = user;
+              });
+            });
+          });
         },
       ),
     );
