@@ -157,25 +157,28 @@ class FirestoreHelper {
             alldata.add(element),
             alldata.add(value.data()!["FLATTER1"]),
             alldata.add(value.data()!["FLATTER2"]),
-            alldatas.add(alldata),
-            alldata.clear()
+            alldatas.addAll(alldata),
+            alldata.clear(),
           });
     }
-      for (var data in alldatas) {
-        for (var info in data) {
-          if (info != uid && info != data[0]) {
-            Utilisateur utilisateur = await getUtilisateur(info);
-            List datamodified = utilisateur.messages;
-            datamodified.remove(data[0]);
-            Map<String, dynamic> map = {
-              "MESSAGES": datamodified,
-            };
-            updateUser(utilisateur.id, map);
-          }
+    for (int i = 0; i != alldatas.length; i = i+3) {
+      alldata.addAll(alldatas.getRange(i, i+3));
+      for (var info in alldata) {
+        if (info != uid && info != alldata[0]) {
+          Utilisateur utilisateur = await getUtilisateur(info);
+          List datamodified = utilisateur.messages;
+          datamodified.remove(alldata[0]);
+          Map<String, dynamic> map = {
+            "MESSAGES": datamodified,
+          };
+          updateUser(utilisateur.id, map);
         }
-        fireDiscussion.doc(data[0]).delete();
       }
-    fireUser.doc(uid).delete();
+      fireDiscussion.doc(alldata[0]).delete();
+      alldata.clear();
+    }
     auth.currentUser!.delete();
+    fireUser.doc(uid).delete();
+
   }
 }

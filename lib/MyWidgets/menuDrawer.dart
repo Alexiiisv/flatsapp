@@ -60,8 +60,11 @@ class MyDrawerState extends State<MyDrawer> {
                   Map<String, dynamic> map = {
                     "AVATAR": urlImage,
                   };
+                  int count = 0;
+                  Navigator.popUntil(context, (route) {
+                    return count++ == 3;
+                  });
                   FirestoreHelper().updateUser(myProfil.id, map);
-                  Navigator.pop(context);
                 },
                 child: const Text("Confirmer"),
               ),
