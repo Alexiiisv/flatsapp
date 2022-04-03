@@ -157,8 +157,10 @@ class FirestoreHelper {
             alldata.add(element),
             alldata.add(value.data()!["FLATTER1"]),
             alldata.add(value.data()!["FLATTER2"]),
-            alldatas.add(alldata)
+            alldatas.add(alldata),
+            alldata.clear()
           });
+    }
       for (var data in alldatas) {
         for (var info in data) {
           if (info != uid && info != data[0]) {
@@ -171,9 +173,8 @@ class FirestoreHelper {
             updateUser(utilisateur.id, map);
           }
         }
+        fireDiscussion.doc(data[0]).delete();
       }
-      fireDiscussion.doc(element).delete();
-    }
     fireUser.doc(uid).delete();
     auth.currentUser!.delete();
   }
