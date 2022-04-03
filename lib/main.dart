@@ -141,7 +141,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   setState(() {
                     myProfil = value;
                   });
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  Navigator.push(context, MaterialPageRoute(
+                      settings: RouteSettings(name: "/connection"),
+                      builder: (context) {
                     return const DashBoard();
                   }));
                 }).catchError((error) {
