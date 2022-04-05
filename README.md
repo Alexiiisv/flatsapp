@@ -1,16 +1,19 @@
-# logpage
+# FlatsApp
 
-login pgA new Flutter project.
+### Membres
+[Dockx Sven](https://github.com/svenickx)
 
-## Getting Started
+[Velleine Alexis](https://github.com/Alexiiisv)
 
-This project is a starting point for a Flutter application.
+<br>
 
-A few resources to get you started if this is your first Flutter project:
+### Objectif
+Avoir un systeme de création de compte / connection de compte sur la base de donnée.
+Créer une application mobile style messagerie avec un système de contact et avoir la possibilité de modifier des informations sur le profil connecté.<br>
+Nous avons rajouté la possibilité de supprimer de nos conversations des utilisateurs et de supprimer totalement un utilisateur sur l'application.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+### Packages
+Il nous était interdit d'utiliser des packages de discussion déjà fait sur internet, le seul package que nous avons utiliser or ceux des cours est [nanoid](https://pub.dev/packages/nanoid).
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Firebase
+Pour notre application nous avons utilisé [Firebase](https://firebase.google.com/) une base de donnée créer par Google.
