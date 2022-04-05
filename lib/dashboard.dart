@@ -125,8 +125,9 @@ class DashBoardState extends State<DashBoard> {
                                         ),
                                         onPressed: () {
                                           setState(() {
-                                            FirestoreHelper().deleteDiscussionFromUser(
-                                                myProfil, user);
+                                            FirestoreHelper()
+                                                .deleteDiscussionFromUser(
+                                                    myProfil, user);
                                           });
                                           Navigator.pop(context);
                                         },

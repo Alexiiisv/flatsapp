@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:logpage/Library/lib.dart';
 
 import 'functions/FirestoreHelper.dart';
+import 'main.dart';
 import 'model/Utilisateur.dart';
 
 class Settings extends StatefulWidget {
@@ -161,7 +162,8 @@ class SettingsState extends State<Settings> {
                       ),
                       onPressed: () {
                         FirestoreHelper().deleteUser(myProfil.id);
-                        Navigator.pop(context);
+                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                            MyApp()), (Route<dynamic> route) => false);
                       },
                       child: const Text("Valider"),
                     ),

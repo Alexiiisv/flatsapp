@@ -37,18 +37,18 @@ class DetailState extends State<Detail> {
         const SizedBox(
           height: 50,
         ),
-        Container(
-          height: 150,
-          width: 150,
-          decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                fit: BoxFit.fill,
-                image: (widget.user.avatar == null)
-                    ? NetworkImage(initialPP)
-                    : NetworkImage(widget.user.avatar!),
-              )),
-        ),
+          Container(
+            height: 150,
+            width: 150,
+            decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  fit: BoxFit.fill,
+                  image: (widget.user.avatar == null)
+                      ? NetworkImage(initialPP)
+                      : NetworkImage(widget.user.avatar!),
+                )),
+          ),
         const SizedBox(
           height: 30,
         ),
