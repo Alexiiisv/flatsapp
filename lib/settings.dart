@@ -77,8 +77,7 @@ class SettingsState extends State<Settings> {
                 image: DecorationImage(
                   fit: BoxFit.fill,
                   image: (myProfil.avatar == null)
-                      ? const NetworkImage(
-                      "https://voitures.com/wp-content/uploads/2017/06/Kodiaq_079.jpg.jpg")
+                      ? NetworkImage(initialPP)
                       : NetworkImage(myProfil.avatar!),
                 )),
           ),
