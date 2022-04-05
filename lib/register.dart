@@ -38,9 +38,17 @@ class RegisterState extends State<Register> {
       padding: const EdgeInsets.all(40),
       child: Column(
         children: [
-          const Image(
-              image: NetworkImage(
-                  "https://firebasestorage.googleapis.com/v0/b/projet1-6f10d.appspot.com/o/image%2Fflatsapp.jpg?alt=media&token=f18b987b-f1e4-491c-84fc-e48dd9e4e236")),
+          Container(
+            width: 150,
+            height: 150,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                image: NetworkImage(
+                    "https://firebasestorage.googleapis.com/v0/b/projet1-6f10d.appspot.com/o/image%2Fflatsapp.jpg?alt=media&token=f18b987b-f1e4-491c-84fc-e48dd9e4e236"),
+              ),
+            ),
+          ),
           const SizedBox(
             height: 20,
           ),
@@ -51,7 +59,7 @@ class RegisterState extends State<Register> {
               });
             },
             decoration: InputDecoration(
-                hintText: "Entrer votre adresse mail",
+                hintText: "Entrez votre adresse mail",
                 filled: true,
                 fillColor: Colors.white,
                 border: OutlineInputBorder(
@@ -69,7 +77,7 @@ class RegisterState extends State<Register> {
             },
             obscureText: true,
             decoration: InputDecoration(
-                hintText: "Entrer votre mot de passe",
+                hintText: "Entrez votre mot de passe",
                 filled: true,
                 fillColor: Colors.white,
                 border: OutlineInputBorder(
@@ -86,7 +94,7 @@ class RegisterState extends State<Register> {
               });
             },
             decoration: InputDecoration(
-                hintText: "Entrer nom",
+                hintText: "Entrez votre nom",
                 filled: true,
                 fillColor: Colors.white,
                 border: OutlineInputBorder(
@@ -96,14 +104,14 @@ class RegisterState extends State<Register> {
           const SizedBox(
             height: 20,
           ),
-          TextField(
+          TextField(S
             onChanged: (value) {
               setState(() {
                 prenom = value;
               });
             },
             decoration: InputDecoration(
-                hintText: "Entrer prénom",
+                hintText: "Entrez votre prénom",
                 filled: true,
                 fillColor: Colors.white,
                 border: OutlineInputBorder(
