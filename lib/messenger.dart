@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logpage/Library/constant.dart';
 
+import 'detail.dart';
 import 'functions/FirestoreHelper.dart';
 import 'model/Discussion.dart';
 import 'model/Utilisateur.dart';
@@ -57,10 +58,44 @@ class MessengerState extends State<Messenger> {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text("${widget.userReceiver.prenom} ${widget.userReceiver.nom}"),
+        title: messengerAppBar(),
         centerTitle: true,
       ),
       body: bodyPage(),
+    );
+  }
+
+  Widget messengerAppBar() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          height: 40,
+          width: 40,
+          decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                fit: BoxFit.fill,
+                image: (widget.userReceiver.avatar == null)
+                    ? NetworkImage(initialPP)
+                    : NetworkImage(widget.userReceiver.avatar!),
+              )),
+        ),
+        const SizedBox(
+          width: 20,
+        ),
+        InkWell(
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return Detail(user: widget.userReceiver);
+            }));
+          },
+          child:
+              Text("${widget.userReceiver.prenom} ${widget.userReceiver.nom}"),
+        ),
+        const SizedBox(width: 45,)
+      ],
     );
   }
 
