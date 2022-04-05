@@ -90,6 +90,15 @@ class MessengerState extends State<Messenger> {
               child: Container(
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.black),
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: (isSender)
+                          ? const Radius.circular(10)
+                          : const Radius.circular(0),
+                      topLeft: const Radius.circular(10),
+                      topRight: const Radius.circular(10),
+                      bottomRight: (isSender)
+                          ? const Radius.circular(0)
+                          : const Radius.circular(10)),
                 ),
                 child: Text(
                   message,
