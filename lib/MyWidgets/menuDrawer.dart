@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:logpage/Library/lib.dart';
 import 'package:logpage/functions/FirestoreHelper.dart';
 
+import '../main.dart';
 import '../settings.dart';
 
 class MyDrawer extends StatefulWidget {
@@ -88,6 +89,22 @@ class MyDrawerState extends State<MyDrawer> {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return const Settings();
                 })).then((_) => setState(() {}));
+              },
+            ),
+            const SizedBox(height: 200,),
+            InkWell(
+              child: const SizedBox(
+                height: 50,
+                width: 50,
+                child: Icon(
+                  Icons.arrow_back,
+                  size: 30,
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => const MyApp()),
+                    (Route<dynamic> route) => false);
               },
             ),
           ],
