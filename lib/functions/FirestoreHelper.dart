@@ -161,8 +161,8 @@ class FirestoreHelper {
             alldata.clear(),
           });
     }
-    for (int i = 0; i != alldatas.length; i = i+3) {
-      alldata.addAll(alldatas.getRange(i, i+3));
+    for (int i = 0; i != alldatas.length; i = i + 3) {
+      alldata.addAll(alldatas.getRange(i, i + 3));
       for (var info in alldata) {
         if (info != uid && info != alldata[0]) {
           Utilisateur utilisateur = await getUtilisateur(info);
@@ -179,6 +179,20 @@ class FirestoreHelper {
     }
     auth.currentUser!.delete();
     fireUser.doc(uid).delete();
+  }
 
+  Future deleteDiscussion(Utilisateur u1, Utilisateur u2) async {
+    Map<String, dynamic> map;
+
+    String uidDiscussion = getSameUidDiscussion(u1, u2);
+    fireDiscussion.doc(uidDiscussion).delete();
+
+    u1.messages.remove(uidDiscussion);
+    map = {"MESSAGES": u1.messages,};
+    updateUser(u1.id, map);
+
+    u2.messages.remove(uidDiscussion);
+    map = {"MESSAGES": u2.messages,};
+    updateUser(u2.id, map);
   }
 }

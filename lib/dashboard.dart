@@ -87,14 +87,62 @@ class DashBoardState extends State<DashBoard> {
                       }));
                     },
                     title: Text(user.prenom),
-                    trailing: IconButton(
-                        onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return Messenger(userReceiver: user);
-                          }));
-                        },
-                        icon: const Icon(Icons.message_outlined)),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                            onPressed: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return Messenger(userReceiver: user);
+                              }));
+                            },
+                            icon: const Icon(Icons.message_outlined)),
+                        IconButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text(
+                                        "Voulez vous supprimer la conversation avec ${user.prenom}?"),
+                                    actions: <Widget>[
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          primary: Colors.blue,
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text(
+                                          "Annuler",
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          primary: Colors.red,
+                                        ),
+                                        onPressed: () {
+                                          setState(() {
+                                            FirestoreHelper().deleteDiscussion(
+                                                myProfil, user);
+                                          });
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text("Valider"),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+                            icon: const Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                            )),
+                      ],
+                    ),
                   );
                 });
           }

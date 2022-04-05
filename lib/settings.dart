@@ -58,7 +58,10 @@ class SettingsState extends State<Settings> {
         ),
         SizedBox(
           height: 70,
-          width: MediaQuery.of(context).size.width / 2,
+          width: MediaQuery
+              .of(context)
+              .size
+              .width / 2,
           child: const Text(
             "Appuyez sur les éléments que vous souhaitez modifier",
             textAlign: TextAlign.center,
@@ -75,7 +78,7 @@ class SettingsState extends State<Settings> {
                   fit: BoxFit.fill,
                   image: (myProfil.avatar == null)
                       ? const NetworkImage(
-                          "https://voitures.com/wp-content/uploads/2017/06/Kodiaq_079.jpg.jpg")
+                      "https://voitures.com/wp-content/uploads/2017/06/Kodiaq_079.jpg.jpg")
                       : NetworkImage(myProfil.avatar!),
                 )),
           ),
@@ -105,34 +108,68 @@ class SettingsState extends State<Settings> {
           height: 30,
         ),
         SizedBox(
-          width: MediaQuery.of(context).size.width * 0.66,
+          width: MediaQuery
+              .of(context)
+              .size
+              .width * 0.66,
           child: DateTimePicker(
             type: DateTimePickerType.date,
             initialValue: (myProfil.birthday == null)
                 ? DateTime.now().toString()
                 : myProfil.birthday.toString(),
             firstDate: DateTime(1950),
-            lastDate: DateTime(DateTime.now().year + 1),
+            lastDate: DateTime(DateTime
+                .now()
+                .year + 1),
             icon: const Icon(Icons.event),
             dateLabelText: 'Date de naissance',
-            onChanged: (val) => setState(() {
-              Map<String, dynamic> map = {};
-              map = {"BIRTHDAY": DateTime.parse(val)};
+            onChanged: (val) =>
+                setState(() {
+                  Map<String, dynamic> map = {};
+                  map = {"BIRTHDAY": DateTime.parse(val)};
 
-              FirestoreHelper().updateUser(myProfil.id, map);
-              setState(() {
-                myProfil.birthday = Timestamp.fromDate(DateTime.parse(val));
-              });
-            }),
+                  FirestoreHelper().updateUser(myProfil.id, map);
+                  setState(() {
+                    myProfil.birthday = Timestamp.fromDate(DateTime.parse(val));
+                  });
+                }),
           ),
         ),
         const SizedBox(
           height: 20,
         ),
         ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: Colors.red,
+          ),
           onPressed: () {
-            FirestoreHelper().deleteUser(myProfil.id);
-            Navigator.pop(context);
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: const Text(
+                      "Etes vous sûr de vouloir supprimer votre compte ?"),
+                  actions: <Widget>[
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text("Annuler"),
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.red,
+                      ),
+                      onPressed: () {
+                        FirestoreHelper().deleteUser(myProfil.id);
+                        Navigator.pop(context);
+                      },
+                      child: const Text("Valider"),
+                    ),
+                  ],
+                );
+              },
+            );
           },
           child: Text("Supprimer le compte"),
         ),
@@ -176,15 +213,16 @@ class SettingsState extends State<Settings> {
                 onPressed: () {
                   setState(() {
                     Map<String, dynamic> map = {};
-                    if (valueToChange == "firstName")
+                    if (valueToChange == "firstName") {
                       map = {
                         "PRENOM": firstName,
                       };
-                    if (valueToChange == "lastName")
+                    }
+                    if (valueToChange == "lastName") {
                       map = {
                         "NOM": lastName,
                       };
-
+                    }
                     FirestoreHelper().updateUser(myProfil.id, map);
                     Navigator.pop(context);
                     setState(() {
